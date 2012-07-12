@@ -1,0 +1,26 @@
+# to compile
+javac -verbose -classpath ./junit-4.10.jar:. com/test/HelloWorldTest.java 
+
+# to run test
+
+# to build jar
+jar 
+
+# Requirements
+Build an HTTP service in Java from scratch.
+
+* You may not use any 3rd party libraries, except JUnit
+* You may not use any HTTP library within the Java SDK
+* Your code must be 100% tested
+* Your server must provide the following features:
+
+     * Delivered as an executable jar.  It should execute on the command line with options for port number and served directory.
+               java -jar <your jar file> -p <port> -d <directory to serve>
+     * Logging.  The server should log each requested resource to standard out
+     * /hello : This is a special path for which you server should display a friendly web page welcoming them to your server.
+     * Directory listing:  If a requested path matches a directory in the served directory, list the files in the directory as links to serve the files. '/' matches the root served directory.
+     * File Serving:  If a requested path matches the path of a file in the served directory, serve it.  HTML files should show up as web pages.  .gif, .png, .jpg files should show up as images.  .pdf files should display as PDFs.  And in general, all files should be served appropriately to their file type.
+     * /form : This is a special path for which your server should display a form with three text fields named one, two, three.  The form method must be POST.  The form action must be "/form". When submitted, all the form fields submitted (including extras not in the form) should be displayed along with their values in a list.
+     * /time : This is a special path for which your server should wait for 1 second, then response with the current time.
+     * Simultaneous Requests.  Your server must process multiple requests simultaneously.
+     * Graceful Errors.  The server must respond with appropriate errors, for example when it can't find the requested file.
