@@ -4,19 +4,21 @@ import java.io.*;
 import java.net.*;
 import java.net.Socket;
 import java.net.ServerSocket;
-
+import java.util.logging.*;
 
 class Webserver implements Runnable {
 	
-	public ServerSocket socket;
-	public int port;
+	private ServerSocket socket;
+	private int port;
+	private static Logger log;
 
 	public Webserver(int port) throws Exception {
 		socket = new ServerSocket(port);
-			//			int i = 1 / 0;o
-	}
 
-	//	public void listen() throws Exception
+		ConsoleHandler handler = new ConsoleHandler();
+		log = Logger.getLogger("webserver");
+		log.addHandler(handler);
+	}
 
 	public String close() throws Exception {
 		socket.close();
@@ -26,25 +28,28 @@ class Webserver implements Runnable {
 	public void run(){
 		while(true){
 				try{
-					
-					System.out.println("Waiting for connection");
+					log.info("Waiting for connection");
 					Socket client = socket.accept();
-					System.out.println("Client accepted");
+					log.info("Client accepted");
 					PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 					out.println("Welcome to Tyler's server\n");
+
+					BufferedReader inFromClient =
+						new BufferedReader(new InputStreamReader(client.getInputStream()));
+
+					String message = inFromClient.readLine();
+					log.info("Client message " + message);
 					
-					System.out.println("Closing everything");
+					log.info("Closing connection");
 					out.close();
 					client.close();
 				}
 				catch(Exception e) {
-					System.out.println("error " + e);
+					log.severe("error " + e);
 					break;
 				}
 		}
 	}
-
-
 
 	public String sayHello(){
 		return "Hello World";
