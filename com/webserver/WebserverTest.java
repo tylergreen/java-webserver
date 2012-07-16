@@ -12,9 +12,9 @@ public class WebserverTest {
 	private static Webserver server;
 	@BeforeClass 
 	public static void beforeAll() throws Exception{
-		 server = new Webserver(9876);
-		 thread = new Thread(server);
-		 thread.start();
+		server = new Webserver(9876, false);
+		thread = new Thread(server);
+		thread.start();
 	}
 
 	@AfterClass
@@ -70,7 +70,7 @@ public class WebserverTest {
 
 	@Test
 	public void testDispatch() throws Exception {
-		server.dispatch(""
+		
 	}
 
 	@Test 

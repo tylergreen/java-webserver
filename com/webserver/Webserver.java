@@ -12,12 +12,16 @@ class Webserver implements Runnable {
 	private int port;
 	private static Logger log;
 
-	public Webserver(int port) throws Exception {
+	public Webserver(int port, boolean logging_on) throws Exception {
 		socket = new ServerSocket(port);
 
 		ConsoleHandler handler = new ConsoleHandler();
 		log = Logger.getLogger("webserver");
-		log.addHandler(handler);
+		if(!logging_on){
+			log.setUseParentHandlers(false);
+			System.out.println("logging off");
+			//log.addHandler(handler);
+		}
 	}
 
 	public String close() throws Exception {
