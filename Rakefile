@@ -17,6 +17,10 @@ task :compile do
   end
 end
 
+task :build_jar do
+  jar cmvf manifest.txt webserver.jar com
+end
+
 task :default => [:compile, :test]
 
 		

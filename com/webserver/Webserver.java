@@ -80,8 +80,9 @@ class Webserver implements Runnable {
 	}
 
 	public static void main(String[] args) throws Exception{
-		FileServer fs = new FileServer("com/webserver/test_directory");
-		Webserver server = new Webserver(9876, fs, false);
+		// improve arg passing 
+		FileServer fs = new FileServer(args[1]);
+		Webserver server = new Webserver(Integer.parseInt(args[0]), fs, true);
 		Thread thread = new Thread(server);
 		thread.start();
 	}
