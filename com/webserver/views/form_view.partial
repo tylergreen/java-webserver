@@ -1,0 +1,10 @@
+<html>
+<body>
+  <form action="/form" method="post">
+	one: <input type="text" name="one" /> <br />
+	two: <input type="text" name="two" /> <br />
+	three: <input type="text" name="three" /> <br />
+	<input type="submit" value="Submit" />
+  </form>
+</body>
+<html>

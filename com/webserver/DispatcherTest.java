@@ -39,12 +39,12 @@ public class DispatcherTest {
 	@Test
 	public void testForm() throws Exception{
 		String response = dispatcher.dispatch("GET /form HTTP/1.1");
-		assertEquals("<html>form here</html>", response);
+		assertEquals(Renderer.form_page(), response);
 	}
 
 	@Test
 	public void testFormPost() throws Exception{
-		String response = dispatcher.dispatch("GET /form HTTP/1.1");
+		String response = dispatcher.dispatch("POST /form HTTP/1.1");
 		assertEquals("<html>form response listing</html>", response);
 	}
 

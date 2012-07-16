@@ -32,7 +32,7 @@ class Dispatcher {
 			return dateFormat.format(date);
 		}
 		else if (path.matches("/form")){
-			return "<html>put real form here</html>";
+			return Renderer.form_page();
 		}
 		else if (file_server.isFile(path)){
 			return file_server.open(path);
