@@ -10,11 +10,17 @@ import java.text.SimpleDateFormat;
 
 public class DispatcherTest {
 
+	private static Dispatcher dispatcher;
+	@BeforeClass
+	public static void beforeAll(){
+		 dispatcher = new Dispatcher(new FileServer("com/webserver/test_directory"));
+	}
+
 	@Test
 	public void testHelloDispatch() throws Exception{
-		String response = Dispatcher.dispatch("GET /hello HTTP/1.1");
+		String response = dispatcher.dispatch("GET /hello HTTP/1.1");
 		assertEquals("Welcome to Tyler's server", response);
-		response = Dispatcher.dispatch("GET /hello HTTP/1.0");		
+		response = dispatcher.dispatch("GET /hello HTTP/1.0");		
 		assertEquals("Welcome to Tyler's server", response);
 	}
 
@@ -24,7 +30,7 @@ public class DispatcherTest {
 		Calendar calendar =  Calendar.getInstance();
 		calendar.add(Calendar.SECOND, 1);
 		Date future = calendar.getTime();
-		String response = Dispatcher.dispatch("GET /time HTTP/1.1");
+		String response = dispatcher.dispatch("GET /time HTTP/1.1");
 		Date responseTime = format.parse(response);
 		assertEquals(format.format(future), format.format(responseTime));
 	}
@@ -32,21 +38,21 @@ public class DispatcherTest {
 
 	@Test
 	public void testForm() throws Exception{
-		String response = Dispatcher.dispatch("GET /form HTTP/1.1");
+		String response = dispatcher.dispatch("GET /form HTTP/1.1");
 		assertEquals("<html>form here</html>", response);
 	}
 
 	@Test
 	public void testFormPost() throws Exception{
-		String response = Dispatcher.dispatch("GET /form HTTP/1.1");
+		String response = dispatcher.dispatch("GET /form HTTP/1.1");
 		assertEquals("<html>form response listing</html>", response);
 	}
 
 	// need to think about this one
 	@Test
 	public void testDirectoryList() throws Exception{
-		assertEquals("list of files", Dispatcher.dispatch("GET / HTTP/1.1"));
-		assertEquals("list of files", Dispatcher.dispatch("GET / HTTP/1.1"));
+		assertEquals("list of files", dispatcher.dispatch("GET / HTTP/1.1"));
+		assertEquals("list of files", dispatcher.dispatch("GET / HTTP/1.1"));
 	}
 
 	@Test
@@ -71,12 +77,12 @@ public class DispatcherTest {
 
 	@Test
 	public void testError401() throws Exception{
-		assertEquals("401 page", Dispatcher.dispatch("GARBARGE"));
+		assertEquals("401 page", dispatcher.dispatch("GARBARGE"));
 	}
 
 	@Test
 	public void testError404() throws Exception{
-		assertEquals("404 page", Dispatcher.dispatch("GET /something-not-there HTTP/1.1"));
+		assertEquals("404 page", dispatcher.dispatch("GET /something-not-there HTTP/1.1"));
 	}
 	
 
