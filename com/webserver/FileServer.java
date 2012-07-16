@@ -28,4 +28,14 @@ class FileServer {
 		File file = new File(root + file_path);
 		return file;
 	}
+
+	public Boolean isFile(String file_path) {
+		File file = new File(root + file_path);
+		return file.isFile();
+	}
+
+	public Boolean isDirectory(String file_path) {
+		File file = new File(root + file_path);
+		return file.isDirectory();
+	}
 }

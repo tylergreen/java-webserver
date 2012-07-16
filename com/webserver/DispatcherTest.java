@@ -49,10 +49,15 @@ public class DispatcherTest {
 	}
 
 	// need to think about this one
+	// need to make these links
 	@Test
 	public void testDirectoryList() throws Exception{
-		assertEquals("list of files", dispatcher.dispatch("GET / HTTP/1.1"));
-		assertEquals("list of files", dispatcher.dispatch("GET / HTTP/1.1"));
+		assertEquals("[delta-force.jpg, simple.txt, webpage.html]", dispatcher.dispatch("GET / HTTP/1.1"));
+	}
+
+	@Test
+	public void testTextFileServe() throws Exception{
+		assertEquals("just simple text", dispatcher.dispatch("GET /simple.txt HTTP/1.1"));
 	}
 
 	@Test
@@ -84,6 +89,7 @@ public class DispatcherTest {
 	public void testError404() throws Exception{
 		assertEquals("404 page", dispatcher.dispatch("GET /something-not-there HTTP/1.1"));
 	}
+
 	
 
 }

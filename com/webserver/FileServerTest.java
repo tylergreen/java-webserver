@@ -13,6 +13,19 @@ public class FileServerTest {
 	public static void beforeAll() {
 		fs = new FileServer("com/webserver/test_directory");
 	}
+	
+	@Test 
+	public void test_is_file(){
+		assertTrue(fs.isFile("/simple.txt"));
+		assertFalse(fs.isFile("/non-existant-file"));
+	}
+
+	@Test 
+	public void test_is_directory(){
+		assertTrue(fs.isDirectory("/"));
+		assertFalse(fs.isDirectory("/simple.txt"));
+		assertFalse(fs.isDirectory("/non-existant-file"));
+	}
 
 	@Test
 	public void testOpenFile() throws Exception{
