@@ -14,13 +14,11 @@ class Webserver implements Runnable {
 
 	public Webserver(int port, boolean logging_on) throws Exception {
 		socket = new ServerSocket(port);
-
 		ConsoleHandler handler = new ConsoleHandler();
 		log = Logger.getLogger("webserver");
 		if(!logging_on){
 			log.setUseParentHandlers(false);
 			System.out.println("logging off");
-			//log.addHandler(handler);
 		}
 	}
 
@@ -32,9 +30,12 @@ class Webserver implements Runnable {
 	public void run(){
 		while(true){
 				try{
+					// initiate connection
 					log.info("Waiting for connection");
 					Socket client = socket.accept();
 					log.info("Client accepted");
+					
+					// handle request
 					PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 					out.println("Welcome to Tyler's server\n");
 
@@ -43,6 +44,8 @@ class Webserver implements Runnable {
 
 					String message = inFromClient.readLine();
 					log.info("Client message " + message);
+
+					// cleanup
 					
 					log.info("Closing connection");
 					out.close();

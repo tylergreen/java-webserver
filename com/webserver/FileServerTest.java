@@ -1,5 +1,6 @@
 package com.webserver;
 
+import java.util.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -11,7 +12,7 @@ public class FileServerTest {
 
 	@BeforeClass
 	public static void beforeAll() {
-		FileServer fs = new FileServer("com/webserver/test_directory");
+		fs = new FileServer("com/webserver/test_directory");
 	}
 
 	@Test
@@ -20,9 +21,11 @@ public class FileServerTest {
 	}
 
 	@Test 
-	public void testRootListing(){
-		String[] files = {"simple.txt", "delta-force.jpg", "webpage.html"};
-		assertEquals(files, fs.list("/"));
+	public void testRootListing() {
+		// maybe should sort
+		String[] test_files = {"delta-force.jpg", "simple.txt", "webpage.html"};
+		assertArrayEquals(test_files, fs.list("/")); 
 	}
+
 	
 }
