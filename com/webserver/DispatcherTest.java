@@ -9,6 +9,8 @@ public class DispatcherTest {
 	public void testHelloDispatch(){
 		String response = Dispatcher.dispatch("GET /hello HTTP/1.1");
 		assertEquals("Welcome to Tyler's server", response);
+		response = Dispatcher.dispatch("GET /hello HTTP/1.0");		
+		assertEquals("Welcome to Tyler's server", response);
 	}
 
 	@Test 
