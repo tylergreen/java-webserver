@@ -28,21 +28,33 @@ class Webserver implements Runnable {
 
 	public String close() throws Exception {
 		socket.close();
-		return "closed";
-	}
+		return "closed";	
+}
 
+	public String read_request(BufferedReader reader) throws Exception{
+		StringBuffer string_buffer = new StringBuffer();
+		String line;
+		while(((line = reader.readLine()) != null) && (!line.equals(""))){
+			log.info("read " + line);
+			string_buffer.append(line + "\n");
+		}
+		reader.close();
+		return string_buffer.toString();
+	}
+	
+	// should be called listen -- alias
 	public void run(){
 		while(true){
 				try{
 					// initiate connection
-					log.info("Waiting for connection");
+					log.info("Waiting for connection!!");
 					Socket client = socket.accept();
-					log.info("Client accepted");
-					
 					BufferedReader inFromClient =
 						new BufferedReader(new InputStreamReader(client.getInputStream()));
-
-					String request = inFromClient.readLine();
+					log.info("Client accepted");
+					String request = read_request(inFromClient);
+					log.info("Request has been read. Dispatching...");
+					log.info(request);
 					String response = dispatcher.dispatch(request);
 
 					PrintWriter out = new PrintWriter(client.getOutputStream(), true);
@@ -53,11 +65,9 @@ class Webserver implements Runnable {
 					out.println("");
 					out.println(response);
 
-
 					//log.info("Client message " + message);
 
 					// cleanup
-					
 					log.info("Closing connection");
 					out.close();
 					client.close();
@@ -81,10 +91,10 @@ class Webserver implements Runnable {
 
 	public static void main(String[] args) throws Exception{
 		// improve arg passing 
-		FileServer fs = new FileServer(args[1]);
-		Webserver server = new Webserver(Integer.parseInt(args[0]), fs, true);
-		Thread thread = new Thread(server);
-		thread.start();
+		// FileServer fs = new FileServer(args[1]);
+		// Webserver server = new Webserver(Integer.parseInt(args[0]), fs, true);
+		// Thread thread = new Thread(server);
+		// thread.start();
 	}
 }
 

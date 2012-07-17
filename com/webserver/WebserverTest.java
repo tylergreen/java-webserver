@@ -13,9 +13,9 @@ public class WebserverTest {
 	@BeforeClass 
 	public static void beforeAll() throws Exception{
 		FileServer fs = new FileServer("com/webserver/test_directory");
-		server = new Webserver(9876, fs, false);
-		thread = new Thread(server);
-		thread.start();
+		server = new Webserver(9860, fs, true);
+		//		thread = new Thread(server);
+		//		thread.start();
 	}
 
 	@AfterClass
@@ -58,16 +58,16 @@ public class WebserverTest {
 		//testSayHi();
 	}
 
-	@Test 
-	public void testHelloReq() throws Exception{
-		Socket clientSocket = new Socket("localhost", 9876);
-		PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-		out.println("GET /hello HTTP/1.1");
+	// @Test 
+	// public void testHelloReq() throws Exception{
+	// 	Socket clientSocket = new Socket("localhost", 9876);
+	// 	PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+	// 	out.println("GET /hello HTTP/1.1");
 
-		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		String response = inFromServer.readLine();
-		assertEquals("Welcome to Tyler's server", response);
-	}
+	// 	BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+	// 	String response = inFromServer.readLine();
+	// 	assertEquals("Welcome to Tyler's server", response);
+	// }
 
 	@Test
 	public void testDispatch() throws Exception {
@@ -90,6 +90,22 @@ public class WebserverTest {
 	public void testResponseHeader() throws Exception {
 
 	}
+
+	@Test 
+	public void test_read_request() throws Exception{
+		StringBuffer s = new StringBuffer();
+		s.append("GET /hello HTTP/1.1\n");
+		s.append("second line\n");
+		s.append("third line\n");
+		String test_request = s.toString();
+		
+		InputStream stream = new ByteArrayInputStream(test_request.getBytes());
+		BufferedReader mock_client = new BufferedReader(new InputStreamReader(stream));
+
+		String request = server.read_request(mock_client);
+		assertEquals(s.toString(), request);
+	}
+
 	
 }
 
