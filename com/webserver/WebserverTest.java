@@ -13,7 +13,7 @@ public class WebserverTest {
 	@BeforeClass 
 	public static void beforeAll() throws Exception{
 		FileServer fs = new FileServer("com/webserver/test_directory");
-		server = new Webserver(9860, fs, true);
+		server = new Webserver(9860, fs, false);
 		//		thread = new Thread(server);
 		//		thread.start();
 	}

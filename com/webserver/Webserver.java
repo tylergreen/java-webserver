@@ -49,21 +49,19 @@ class Webserver implements Runnable {
 					// initiate connection
 					log.info("Waiting for connection!!");
 					Socket client = socket.accept();
+					log.info("Client accepted");
+
 					BufferedReader inFromClient =
 						new BufferedReader(new InputStreamReader(client.getInputStream()));
-					log.info("Client accepted");
 					String request = read_request(inFromClient);
-					log.info("Request has been read. Dispatching...");
-					log.info(request);
+					log.info("Request " + request);
+
+					log.info("Dispatching request...");
 					String response = dispatcher.dispatch(request);
 
 					PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-					out.println("HTTP/1.1 200 OK"); 
-					out.println("Date: Fri Whatever"); 
-					out.println("Content-Type: text/html"); 
-					out.println("Content-Length: " + response.length());
-					out.println("");
 					out.println(response);
+					// send response to client
 
 					//log.info("Client message " + message);
 

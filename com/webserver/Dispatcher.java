@@ -53,4 +53,15 @@ class Dispatcher {
 		return message.split(" ")[1];
 	}
 
+	public String add_header(String response_body){
+			StringBuffer sb = new StringBuffer();
+			sb.append("HTTP/1.1 200 OK\n"); 
+			sb.append("Date: Fri Whatever\n"); 
+			sb.append("Content-Type: text/html\n"); 
+			sb.append("Content-Length: " + response_body.length() + "\n");
+			sb.append("\n");
+			sb.append(response_body);
+			return sb.toString();
+	}
+
 }

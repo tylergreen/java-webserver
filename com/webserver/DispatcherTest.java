@@ -90,6 +90,23 @@ public class DispatcherTest {
 		assertEquals("404 page", dispatcher.dispatch("GET /something-not-there HTTP/1.1"));
 	}
 
+
+	//  I hate this test.  All I did was cut and paste the method body.
+	@Test
+	public void test_add_header() {
+		String response_body = "<html> Hi! </html>";
+		StringBuffer sb = new StringBuffer();
+		sb.append("HTTP/1.1 200 OK\n"); 
+		sb.append("Date: Fri Whatever\n"); 
+		sb.append("Content-Type: text/html\n"); 
+		sb.append("Content-Length: " + response_body.length() + "\n");
+		sb.append("\n");
+		sb.append(response_body);
+		
+		String response = dispatcher.add_header(response_body);
+		assertEquals(sb.toString(), response);
+	}
+
 	
 
 }
