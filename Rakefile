@@ -18,7 +18,11 @@ task :compile do
 end
 
 task :build_jar do
-  jar cmvf manifest.txt webserver.jar com
+  system 'jar cmvf manifest.txt webserver.jar com'
+end
+
+task :run_jar do
+	 system 'java -jar webserver.jar 9977 com/webserver/test_directory'
 end
 
 task :default => [:compile, :test]
